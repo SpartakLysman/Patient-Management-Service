@@ -1,0 +1,19 @@
+package com.firstone.pm.patientservice.mapper;
+
+import com.firstone.pm.patientservice.dto.PatientResponseDTO;
+import com.firstone.pm.patientservice.model.Patient;
+
+public class PatientMapper {
+
+    public static PatientResponseDTO toDTO(Patient patient) {
+        PatientResponseDTO patientDTO = new PatientResponseDTO();
+        patientDTO.setId(patient.getId().toString());
+        patientDTO.setFirstName(patient.getFirstName());
+        patientDTO.setLastName(patient.getLastName());
+        patientDTO.setGender(patient.getGender().toString());
+        patientDTO.setEmail(patient.getEmail());
+        patientDTO.setAddress(patient.getAddress());
+        patientDTO.setDateOfBirth(patient.getDateOfBirth().toString());
+        return patientDTO;
+    }
+}
