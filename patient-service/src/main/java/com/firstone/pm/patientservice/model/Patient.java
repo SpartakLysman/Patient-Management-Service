@@ -13,11 +13,9 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank
     @Column(nullable = false)
     private String firstName;
 
-    @NotBlank
     @Column(nullable = false)
     private String lastName;
 
@@ -26,13 +24,11 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @NotBlank
     @Email
     @Column(unique = true,
             nullable = false)
     private String email;
 
-    @NotBlank
     @Column(nullable = false)
     private String address;
 

@@ -1,0 +1,11 @@
+PUT http://localhost:4000/api/v1/patients/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+
+{
+  "firstName": "Spartak New",
+  "lastName": "Lysman",
+  "gender": "MALE",
+  "email": "new@gmail.com",
+  "address": "89011 Munich, Germany",
+  "dateOfBirth": "2000-06-08"
+}
