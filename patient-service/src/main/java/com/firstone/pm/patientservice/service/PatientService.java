@@ -4,6 +4,7 @@ import com.firstone.pm.patientservice.dto.PatientRequestDTO;
 import com.firstone.pm.patientservice.dto.PatientResponseDTO;
 import com.firstone.pm.patientservice.exception.EmailAlreadyExistsException;
 import com.firstone.pm.patientservice.exception.PatientNotFoundException;
+import com.firstone.pm.patientservice.grpc.BillingServiceGrpcClient;
 import com.firstone.pm.patientservice.mapper.PatientMapper;
 import com.firstone.pm.patientservice.model.Gender;
 import com.firstone.pm.patientservice.model.Patient;
@@ -18,9 +19,11 @@ import java.util.UUID;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient) {
         this.patientRepository = patientRepository;
+        this.billingServiceGrpcClient = billingServiceGrpcClient;
     }
 
     public List<PatientResponseDTO> getPatients() {
@@ -38,6 +41,14 @@ public class PatientService {
             );
         }
         Patient newPatient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
+
+        billingServiceGrpcClient.createBillingAccount(
+                newPatient.getId().toString(),
+                newPatient.getFirstName(),
+                newPatient.getLastName(),
+                newPatient.getEmail()
+                );
+
         return PatientMapper.toDTO(newPatient);
     }
 
