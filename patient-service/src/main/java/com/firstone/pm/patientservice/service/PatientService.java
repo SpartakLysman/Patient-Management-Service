@@ -5,6 +5,7 @@ import com.firstone.pm.patientservice.dto.PatientResponseDTO;
 import com.firstone.pm.patientservice.exception.EmailAlreadyExistsException;
 import com.firstone.pm.patientservice.exception.PatientNotFoundException;
 import com.firstone.pm.patientservice.grpc.BillingServiceGrpcClient;
+import com.firstone.pm.patientservice.kafka.KafkaProducer;
 import com.firstone.pm.patientservice.mapper.PatientMapper;
 import com.firstone.pm.patientservice.model.Gender;
 import com.firstone.pm.patientservice.model.Patient;
@@ -20,10 +21,12 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
+    private final KafkaProducer kafkaProducer;
 
-    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient, KafkaProducer kafkaProducer) {
         this.patientRepository = patientRepository;
         this.billingServiceGrpcClient = billingServiceGrpcClient;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public List<PatientResponseDTO> getPatients() {
@@ -49,11 +52,12 @@ public class PatientService {
                 newPatient.getEmail()
                 );
 
+        kafkaProducer.sendEvent(newPatient);
+
         return PatientMapper.toDTO(newPatient);
     }
 
-    public PatientResponseDTO updatePatient(UUID id,
-                                            PatientRequestDTO patientRequestDTO) {
+    public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO patientRequestDTO) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(()-> new PatientNotFoundException("Patient with ID: " + id + " not found")
                 );
