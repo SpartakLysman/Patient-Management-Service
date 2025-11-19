@@ -2,10 +2,10 @@ POST http://localhost:4000/api/v1/patients
 Content-Type: application/json
 
 {
-  "firstName": "Kafka Spartak l",
+  "firstName": "Spartak HelloKafka Lysman",
   "lastName": "Lysman",
   "gender": "MALE",
-  "email": "kafkaspartakl@gmail.com",
+  "email": "hellokafkaspartak@gmail.com",
   "address": "89011 Munich, Germany",
   "dateOfBirth": "2000-06-08",
   "registeredDate": "2025-10-15"
