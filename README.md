@@ -12,6 +12,10 @@
 
 <br/>
 
+ - <h4>Cloud Architecture</h4>
+<img src="https://github.com/SpartakLysman/Patient-Management-Service/blob/main/Screenshot%202025-11-20%20at%2022.54.38.png" alt="description" width="800"/>
+
+<br/>
 
 Build & Deploy a Production-Ready Patient Management System with Microservices: Java Spring Boot AWS
 - ✅ Spring Boot 3
